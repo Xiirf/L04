@@ -1,24 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
+import Contacts from './allClass/Contacts';
 import './App.css';
 
 function App() {
+  var contacts = [{name: "Flavien", phone: "123"}, {name: "Flavien2", phone: "123"}, {name: "Flavien3", phone: "123"}];
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Test</h1>
+      <div>
+        <Contacts contacts= {contacts}/>
+      </div>
     </div>
   );
 }
