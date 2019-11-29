@@ -15,7 +15,8 @@ class Contact extends React.Component {
 
   render() {
     const {
-      contact, handleCancelEdit, handleDeleteContact, handleSaveEdit, handleClickEdit, modeEdit, compteEdit,
+      contact, handleCancelEdit, handleDeleteContact,
+      handleSaveEdit, handleClickEdit, modeEdit, compteEdit,
     } = this.props;
     const { phone } = this.state;
     return (
@@ -30,12 +31,10 @@ Nom :
               ? (
                 <>
                   <td>
-                    <label>
 Téléphone:
-                      {' '}
-                      {contact.phone}
-                      <input type="text" value={phone} onChange={this.handleSubmitChange} />
-                    </label>
+                    {' '}
+                    {contact.phone}
+                    <input type="text" value={phone} onChange={this.handleSubmitChange} />
                   </td>
                   <td>
                     <input
@@ -89,6 +88,12 @@ Contact.propTypes = {
     name: PropTypes.string,
     phone: PropTypes.string,
   }).isRequired,
+  handleCancelEdit: PropTypes.func.isRequired,
+  handleDeleteContact: PropTypes.func.isRequired,
+  handleSaveEdit: PropTypes.func.isRequired,
+  handleClickEdit: PropTypes.func.isRequired,
+  modeEdit: PropTypes.bool.isRequired,
+  compteEdit: PropTypes.string.isRequired,
 };
 
 export default Contact;

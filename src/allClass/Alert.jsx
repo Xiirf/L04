@@ -1,9 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Alert extends React.Component {
   render() {
+    const { etat, message } = this.state;
+    const { handleClickHideAlert } = this.props;
     const boxClass = ['alert', 'alert-dismissible', 'fade', 'show'];
-    switch (this.props.etat) {
+    switch (etat) {
       case 'alert-warning':
         boxClass.push('alert-warning');
         break;
@@ -18,13 +21,17 @@ class Alert extends React.Component {
 
     return (
       <div className={boxClass.join(' ')} role="alert">
-        <strong>{this.props.message}</strong>
-        <button type="button" onClick={this.props.handleClickHideAlert} className="close" data-dismiss="alert" aria-label="Close">
+        <strong>{message}</strong>
+        <button type="button" onClick={handleClickHideAlert} className="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
     );
   }
 }
+
+Alert.propTypes = {
+  handleClickHideAlert: PropTypes.func.isRequired,
+};
 
 export default Alert;

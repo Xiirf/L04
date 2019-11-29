@@ -52,23 +52,27 @@ class Contacts extends Component {
   }
 
   handleAddContact(contact) {
-    this.state.contacts.some((c) => c.name === contact.name)
-      ? this.setState(({
+    const { contacts } = this.state;
+    if (contacts.some((c) => c.name === contact.name)) {
+      this.setState(({
         estAffiche: true,
         etat: 'alert-danger',
         message: 'Nom de contact déjà utilisé',
-      }))
-      : this.setState((previousState) => ({
+      }));
+    } else {
+      this.setState((previousState) => ({
         contacts: [...previousState.contacts, contact],
         estAffiche: true,
         etat: 'alert-success',
         message: `Vous avez ajouter le contact : ${contact.name}`,
       }));
+    }
   }
 
   handleDeleteContact(contact) {
-    this.state.contacts.splice(this.state.contacts.findIndex((c) => c.name === contact.name), 1);
-    this.setState((previousState) => ({
+    const { contacts } = this.state;
+    contacts.splice(contacts.findIndex((c) => c.name === contact.name), 1);
+    this.setState(({
       estAffiche: false,
     }));
   }
