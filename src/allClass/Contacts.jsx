@@ -1,5 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import ContactsApi from '../util/ContactsApi';
 import Alert from './Alert';
 import Contact from './Contact';
 import NewContact from './NewContact';
@@ -9,7 +10,7 @@ class Contacts extends Component {
     super(props);
     this.state = {
       estAffiche: false,
-      contacts: props.contacts,
+      contacts: [],
       etat: '',
       message: '',
       modeEdit: false,
@@ -22,6 +23,17 @@ class Contacts extends Component {
     this.handleDeleteContact = this.handleDeleteContact.bind(this);
     this.handleCancelEdit = this.handleCancelEdit.bind(this);
     this.handleSaveEdit = this.handleSaveEdit.bind(this);
+  }
+
+  componentDidMount() {
+    ContactsApi.getAllContacts()
+      .then((contacts) => {
+        console.log(contacts);
+        this.setState(({
+          contacts,
+        }));
+      })
+      .catch((error) => console.error(error));
   }
 
   handleClickEdit(contact) {
@@ -38,11 +50,17 @@ class Contacts extends Component {
   }
 
   handleSaveEdit(contact) {
+    console.log(contact);
     this.setState((previousState) => ({
       contacts: previousState.contacts
         .map((c) => (c.name === contact.name ? Object.assign(c, contact) : c)),
       modeEdit: false,
     }));
+    ContactsApi.updateContact(contact._id, contact)
+      .then((contacts) => {
+        console.log(`PUT =${JSON.stringify(contacts)}`);
+      })
+      .catch((error) => console.error(error));
   }
 
   handleClickHideAlert() {
@@ -66,6 +84,11 @@ class Contacts extends Component {
         etat: 'alert-success',
         message: `Vous avez ajouter le contact : ${contact.name}`,
       }));
+      ContactsApi.addContact(contact)
+        .then((c) => {
+          console.log(`POST =${JSON.stringify(c)}`);
+        })
+        .catch((error) => console.error(error));
     }
   }
 
@@ -75,6 +98,11 @@ class Contacts extends Component {
     this.setState(({
       estAffiche: false,
     }));
+    ContactsApi.deleteContact(contact._id)
+      .then((c) => {
+        console.log(c.status);
+      })
+      .catch((error) => console.error(error));
   }
 
   render() {
@@ -113,12 +141,4 @@ class Contacts extends Component {
   }
 }
 
-Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      name: PropTypes.string,
-      phone: PropTypes.string,
-    }),
-  ).isRequired,
-};
 export default Contacts;

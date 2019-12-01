@@ -1,7 +1,8 @@
-import React from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Contact extends React.Component {
+class Contact extends Component {
   constructor(props) {
     super(props);
     this.state = { phone: '' };
@@ -40,6 +41,7 @@ Téléphone:
                     <input
                       type="button"
                       onClick={() => handleSaveEdit({
+                        _id: contact._id,
                         name: contact.name,
                         phone,
                       })}
@@ -85,6 +87,7 @@ Téléphone:
 
 Contact.propTypes = {
   contact: PropTypes.exact({
+    _id: PropTypes.number,
     name: PropTypes.string,
     phone: PropTypes.string,
   }).isRequired,
